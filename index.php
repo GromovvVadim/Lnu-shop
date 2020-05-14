@@ -1,10 +1,14 @@
-
+<?php 
+session_start();
+include("db.php");
+include_once("functions/functions.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LNU Shop</title>
+    <title>TD Shop</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -14,9 +18,15 @@
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   
+                   <?php
+                   if(!isset($_SESSION['customer_email'])){
+                       echo "Welcome: Guest";
+                   }else{
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                   }
+                   ?>
                </a>
-               <a href="checkout.php" style="color:white"></a>
+               <a href="checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
            </div>
            <div class="col-md-6">
                
@@ -30,7 +40,13 @@
                    </li>
                    <li>
                      <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                    </li>
                    <li>
@@ -75,13 +91,19 @@
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          
+                          <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                           ?>
                        </li> 
                    </ul>
                </div>
                <a href="cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span></span> 
+                   <span><?php items(); ?> Items in cart </span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -115,7 +137,30 @@
                    <li data-target="#myCarousel" data-slide-to="3"></li> 
                </ol>
                <div class="carousel-inner">
-                   
+                   <?php
+                   $get_slides = "select * from slider LIMIT 0,1";
+                   $run_slides = mysqli_query($con,$get_slides);
+                   while($row_slides=mysqli_fetch_array($run_slides)){
+                       $slide_name = $row_slides['slide_name'];
+                       $slide_image = $row_slides['slide_image'];
+                       echo "
+                       <div class='item active'>
+                       <img src='admin_area/slides_images/$slide_image'>
+                       </div>
+                       ";
+                   }
+                   $get_slides = "select * from slider LIMIT 1,3";
+                   $run_slides = mysqli_query($con,$get_slides);
+                   while($row_slides=mysqli_fetch_array($run_slides)){
+                       $slide_name = $row_slides['slide_name'];
+                       $slide_image = $row_slides['slide_image'];
+                       echo "
+                       <div class='item'>
+                       <img src='admin_area/slides_images/$slide_image'>
+                       </div>
+                       ";
+                   }
+                   ?>
                </div>
                <a href="#myCarousel" class="left carousel-control" data-slide="prev">
                    <span class="glyphicon glyphicon-chevron-left"></span>
@@ -207,11 +252,17 @@
    
    <div id="content" class="container"> 
        <div class="row">
-                
+           <?php
+           getProduct();
+           ?>     
        </div>       
    </div>
   
-  
+  <?php 
+    
+    include("footer.php");
+    
+  ?>
     <script src="js/jquery-331.min.js"></script>
     <script src="js/bootstrap-337.min.js"></script>  
 </body>

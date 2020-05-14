@@ -8,7 +8,13 @@
                     <li><a href="cart.php">Shopping Cart</a></li>
                     <li><a href="contact.php">Contacts</a></li>
                     <li>
-                        
+                        <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                        ?>
                     </li>
                 </ul>               
                 <hr class="hidden-md hidden-lg hidden-sm">
@@ -18,11 +24,23 @@
                 <ul>
                     <li>
                     <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                     </li>
                     <li>
-                        
+                        <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='register.php'> Register </a>";
+                           }else{
+                              echo"<a href='customer/account.php?edit_acc'> Edit Account </a>";
+                           }
+                           ?>
                     </li>
                 </ul>
                 <hr class="hidden-md hidden-lg">
@@ -51,7 +69,7 @@
 <div id="copyright">
     <div class="container">
         <div class="footer-copyright text-center py-3 mdb-color indigo lighten-3 ">© 2020 Copyright:
-            <a href="https://hestagentur.no/wp-content/uploads/2018/10/Thomas_Ekstro%CC%88m_Scandinavian_Traveler_05.jpg"> LNU Shop</a>
+            <a href="https://hestagentur.no/wp-content/uploads/2018/10/Thomas_Ekstro%CC%88m_Scandinavian_Traveler_05.jpg"> LNU shop</a>
         </div>
     </div>
 </div> 
