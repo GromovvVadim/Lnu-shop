@@ -1,4 +1,8 @@
-
+<?php 
+session_start();
+include("db.php");
+include_once("functions/functions.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +18,15 @@
        <div class="container">
            <div class="col-md-6 offer">
               <a href="#" class="btn btn-success btn-primary">
-                   
+                   <?php
+                   if(!isset($_SESSION['customer_email'])){
+                       echo "Welcome: Guest";
+                   }else{
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                   }
+                   ?>
                </a>
-               <a href="checkout.php" style="color:white"> </a>
+               <a href="checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
            </div>
            <div class="col-md-6">
                
@@ -30,7 +40,13 @@
                    </li>
                    <li>
                     <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                    </li>
                    <li>
@@ -75,13 +91,19 @@
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                           
+                           <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                           ?>
                        </li> 
                    </ul>
                </div>
                <a href="cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span> Items in cart </span> 
+                   <span><?php items(); ?> Items in cart </span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -122,8 +144,13 @@
                <div class="box">
                    <form action="cart.php" method="post" enctype="multipart/form-data">
                        <h1>Shopping Cart</h1>
-                       
-                       <p class="text-muted">You have  item(s) in your cart</p> 
+                       <?php 
+                       $ip_add = getIpFunc();
+                       $select_cart = "select * from cart where ip_add='$ip_add'";
+                       $run_cart = mysqli_query($con,$select_cart);
+                       $count = mysqli_num_rows($run_cart);
+                       ?>
+                       <p class="text-muted">You have <?php echo $count; ?> item(s) in your cart</p> 
                        <div class="table-responsive">
                            <table class="table">
                                <thead>
@@ -136,33 +163,46 @@
                                    </tr>
                                </thead>
                                <tbody>
-                                 
+                                 <?php 
+                                 $total = 0;
+                                 while($row_cart = mysqli_fetch_array($run_cart)){
+                                   $pro_id = $row_cart['p_id'];
+                                   $pro_qty = $row_cart['qty'];
+                                     $get_products = "select * from products where product_id='$pro_id'";
+                                     $run_products = mysqli_query($con,$get_products);
+                                     while($row_products = mysqli_fetch_array($run_products)){
+                                         $product_title = $row_products['product_title'];
+                                         $product_img1 = $row_products['product_img1'];
+                                         $only_price = $row_products['product_price'];
+                                         $sub_total = $row_products['product_price']*$pro_qty;
+                                         $total += $sub_total;     
+                                   ?>
                                    <tr>
                                        <td>
                                            <img class="img-responsive" src="admin_area/product_images/<?php echo $product_img1; ?>" alt="Product 1">
                                        </td>
                                        <td>
-                                           <a href="details.php?pro_id=<?php echo $pro_id; ?>">  </a>
+                                           <a href="details.php?pro_id=<?php echo $pro_id; ?>"> <?php echo $product_title; ?> </a>
                                        </td>
                                        <td>
-                                          
+                                           <?php echo $pro_qty; ?>
                                        </td>
                                        <td>
-                                           
+                                           <?php echo $only_price; ?>
                                        </td>
                                        <td>
                                            <input type="checkbox" name="remove[]" value="<?php echo $pro_id; ?>">
                                        </td>
                                        <td>
-                                           $
+                                           $<?php echo $sub_total; ?>
                                        </td>
                                    </tr>
-                                    
+                                   <?php } } ?> 
                                </tbody> 
                                <tfoot>
                                    <tr>
                                      <th colspan="5">Total</th>
-                                     <th colspan="2">$</th>
+                                     <th colspan="2">$<?php echo $total; ?></th>
                                    </tr>
                                </tfoot>
                            </table>
@@ -184,7 +224,21 @@
                        </div> 
                    </form> 
                </div>
-               
+               <?php
+                function UpdateC(){
+                    global $con;
+                    if(isset($_POST['update'])){
+                        foreach($_POST['remove'] as $remove_id){
+                            $delete_product = "delete from cart where p_id='$remove_id'";
+                            $run_delete = mysqli_query($con,$delete_product);
+                            if($run_delete){
+                                echo "<script>window.open('cart.php','_self')</script>"; 
+                            }  
+                        } 
+                    }
+                }
+               echo @$up_cart = UpdateC();
+               ?> 
                <div id="row same-heigh-row">
                    
                </div>
@@ -202,7 +256,7 @@
                            <tbody>
                                <tr> 
                                    <td> Order Sub-Total </td>
-                                   <th> $ </th>
+                                   <th> $<?php echo $total; ?> </th>
                                </tr>
                                <tr>
                                    <td> Shipping and Handling </td>
@@ -214,7 +268,7 @@
                                </tr>
                                <tr class="total">
                                    <td> Total </td>
-                                   <th> $ </th>
+                                   <th> $<?php echo $total; ?> </th>
                                </tr>
                            </tbody>
                        </table>
