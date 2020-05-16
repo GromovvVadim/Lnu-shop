@@ -1,4 +1,9 @@
-<!DOCTYPE html> 
+<?php
+session_start(); 
+include("db.php");
+include("functions/functions.php");
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,9 +18,15 @@
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   
+                   <?php
+                   if(!isset($_SESSION['customer_email'])){
+                       echo "Welcome: Guest";
+                   }else{
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                   }
+                   ?>
                </a>
-               <a href="checkout.php"></a>
+               <a href="checkout.php"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?></a>
            </div>
            <div class="col-md-6">
                
@@ -29,7 +40,13 @@
                    </li>
                    <li>
                     <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                    </li>
                    <li>
@@ -74,7 +91,13 @@
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          
+                          <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                           ?>
                        </li> 
                    </ul>
                </div>
