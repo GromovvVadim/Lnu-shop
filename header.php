@@ -1,13 +1,9 @@
-<?php
-session_start(); 
-include("functions/functions.php");
-?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LNU shop</title>
+    <title>LNU Shop</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -17,15 +13,9 @@ include("functions/functions.php");
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   <?php
-                   if(!isset($_SESSION['customer_email'])){
-                       echo "Welcome: Guest";
-                   }else{
-                       echo "Welcome: " . $_SESSION['customer_email'] . "";
-                   }
-                   ?>
+                   
                </a>
-               <a href="checkout.php"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?></a>
+               <a href="checkout.php"></a>
            </div>
            <div class="col-md-6">
                
@@ -39,13 +29,7 @@ include("functions/functions.php");
                    </li>
                    <li>
                     <a href="checkout.php">
-                     <?php
-                     if(!isset($_SESSION['customer_email'])){
-                          echo "<a href='checkout.php'> Login </a>";
-                         }else{
-                          echo " <a href='logout.php'> Log Out </a> ";
-                         }
-                     ?>
+                     
                      </a>
                    </li>
                    <li>
@@ -90,13 +74,7 @@ include("functions/functions.php");
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          <?php
-                           if(!isset($_SESSION['customer_email'])){
-                               echo"<a href='checkout.php'>My Account</a>";
-                           }else{
-                              echo"<a href='customer/account.php?orders'>My Account</a>";
-                           }
-                           ?>
+                          
                        </li> 
                    </ul>
                </div>

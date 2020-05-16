@@ -1,14 +1,10 @@
-<?php
-session_start();
-include("db.php"); 
-include_once("functions/functions.php");
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TD Shop</title>
+    <title>LNU Shop</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -18,15 +14,9 @@ include_once("functions/functions.php");
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   <?php
-                   if(!isset($_SESSION['customer_email'])){
-                       echo "Welcome: Guest";
-                   }else{
-                       echo "Welcome: " . $_SESSION['customer_email'] . "";
-                   }
-                   ?>
+                   
                </a>
-               <a href="checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
+               <a href="checkout.php" style="color:white"> </a>
            </div>
            <div class="col-md-6">
                
@@ -40,13 +30,7 @@ include_once("functions/functions.php");
                    </li>
                    <li>
                     <a href="checkout.php">
-                     <?php
-                     if(!isset($_SESSION['customer_email'])){
-                          echo "<a href='checkout.php'> Login </a>";
-                         }else{
-                          echo " <a href='logout.php'> Log Out </a> ";
-                         }
-                     ?>
+                     
                      </a>
                    </li>
                    <li>
@@ -91,19 +75,13 @@ include_once("functions/functions.php");
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          <?php
-                           if(!isset($_SESSION['customer_email'])){
-                               echo"<a href='checkout.php'>My Account</a>";
-                           }else{
-                              echo"<a href='customer/account.php?orders'>My Account</a>";
-                           }
-                           ?>
+                          
                        </li> 
                    </ul>
                </div>
                <a href="cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span> <?php items(); ?> Items in cart </span> 
+                   <span></span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -127,25 +105,7 @@ include_once("functions/functions.php");
            </div>
        </div> 
    </div>
-   <?php 
-
-    if(isset($_GET['pro_id'])){
-        $product_id = $_GET['pro_id'];
-        $get_product = "select * from products where product_id='$product_id'";
-        $run_product = mysqli_query($con,$get_product);
-        $row_product = mysqli_fetch_array($run_product);
-        $p_cat_id = $row_product['p_cat_id'];
-        $pro_title = $row_product['product_title'];
-        $pro_price = $row_product['product_price'];
-        $pro_desc = $row_product['product_desc'];
-        $pro_img1 = $row_product['product_img1'];
-        $get_p_cat = "select * from product_categories where p_cat_id='$p_cat_id'";
-        $run_p_cat = mysqli_query($con,$get_p_cat);
-        $row_p_cat = mysqli_fetch_array($run_p_cat);
-        $p_cat_title = $row_p_cat['p_cat_title'];
-    }
-
-    ?>
+   
    <div id="content">
        <div class="container">
            <div class="col-md-12">
@@ -200,8 +160,8 @@ include_once("functions/functions.php");
                    </div>
                    <div class="col-sm-6">
                        <div class="box">
-                           <h1 class="text-center"><?php echo $pro_title; ?></h1>
-                           <?php sendToCart(); ?>
+                           <h1 class="text-center"></h1>
+                           
                            <form action="details.php?add_cart=<?php echo $product_id; ?>" class="form-horizontal" method="post">
                                <div class="form-group">
                                    <label for="" class="col-md-5 control-label">Products Quantity</label>
@@ -215,7 +175,7 @@ include_once("functions/functions.php");
                                            </select>
                                     </div>
                                </div>
-                               <p class="price">$ <?php echo $pro_price; ?></p>
+                               <p class="price">$ </p>
                                <p class="text-center buttons"><button class="btn btn-primary i fa fa-shopping-cart"> Add to cart</button></p>
                            </form>
                        </div>
@@ -247,7 +207,7 @@ include_once("functions/functions.php");
                <div class="box info1" id="details">
                   <h4>Product Details</h4>
                   <p>
-                    <?php echo $pro_desc; ?> 
+                    
                   </p> 
                </div>
                
@@ -257,29 +217,7 @@ include_once("functions/functions.php");
                            <h3 class="text-center">Also You May be Interested In</h3>
                        </div>
                    </div>
-                   <?php
-                    $get_products = "select * from products order by rand() DESC LIMIT 0,3";
-                    $run_products = mysqli_query($con,$get_products);
-                   while($row_products=mysqli_fetch_array($run_products)){
-                       $pro_id = $row_products['product_id'];
-                       $pro_title = $row_products['product_title'];
-                       $pro_img1 = $row_products['product_img1'];
-                       $pro_price = $row_products['product_price'];
-                       echo "
-                        <div class='col-md-3 col-sm-6 center-responsive'>
-                            <div class='product same-height'>
-                                <a href='details.php?pro_id=$pro_id'>
-                                    <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
-                                </a>
-                                <div class='text'>
-                                    <h3> <a href='details.php?pro_id=$pro_id'> $pro_title </a> </h3>
-                                    <p class='price'> $ $pro_price </p>
-                                </div>
-                            </div>
-                        </div>
-                       ";
-                   }
-                   ?>
+                   
                </div>
            </div>
            <!--<div id="disqus_thread"></div>
