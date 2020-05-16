@@ -1,15 +1,4 @@
-<?php
-session_start();
-if(!isset($_SESSION['customer_email'])){
-    echo "<script>window.open('../checkout.php','_self')</script>";
-}else{
-include("includes/db.php");
-include("functions/functions.php");
-}
-if(isset($_GET['order_id'])){
-    $order_id = $_GET['order_id'];
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,15 +14,9 @@ if(isset($_GET['order_id'])){
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   <?php
-                   if(!isset($_SESSION['customer_email'])){
-                       echo "Welcome: Guest";
-                   }else{
-                       echo "Welcome: " . $_SESSION['customer_email'] . "";
-                   }
-                   ?>
+                   
                </a>
-               <a href="../checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
+               <a href="../checkout.php" style="color:white"> </a>
            </div>
            <div class="col-md-6">
                
@@ -47,13 +30,7 @@ if(isset($_GET['order_id'])){
                    </li>
                    <li>
                     <a href="../checkout.php">
-                     <?php
-                     if(!isset($_SESSION['customer_email'])){
-                          echo "<a href='checkout.php'> Login </a>";
-                         }else{
-                          echo " <a href='logout.php'> Log Out </a> ";
-                         }
-                     ?>
+                     
                      </a>
                    </li>
                    <li>
@@ -98,19 +75,13 @@ if(isset($_GET['order_id'])){
                            <a href="../contact.php">Contacts</a>
                        </li>
                         <li class="active">
-                          <?php
-                           if(!isset($_SESSION['customer_email'])){
-                               echo"<a href='../checkout.php'> Account</a>";
-                           }else{
-                              echo"<a href='account.php?orders'> Account</a>";
-                           }
-                           ?>
+                          
                        </li> 
                    </ul>
                </div>
                <a href="../cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span><?php items(); ?> Items in cart </span> 
+                   <span> Items in cart </span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -186,28 +157,7 @@ if(isset($_GET['order_id'])){
                            </button>
                        </div>
                    </form>
-                   <?php
-                    if(isset($_POST['confirm_payment'])){
-                        $update_id = $_GET['update_id'];
-                        $invoice_no = $_POST['invoice_no'];
-                        $amount = $_POST['amount_sent'];
-                        $payment_mode = $_POST['payment_mode'];
-                        $ref_id = $_POST['ref_id'];
-                        $code = $_POST['code'];
-                        $payment_date = $_POST['date'];
-                        $complete = "Complete";
-                        $insert_payment = "insert into payments (invoice_no,amount,payment_option,ref_id,code,payment_date) values ('$invoice_no','$amount','$payment_mode','$ref_id','$code','$payment_date')";
-                        $run_payment = mysqli_query($con,$insert_payment);
-                        $update_customer_order = "update customer_orders set order_status='$complete' where order_id='$update_id'";
-                        $run_customer_order = mysqli_query($con,$update_customer_order);
-                        $update_pending_order = "update pending_orders set order_status='$complete' where order_id='$update_id'";
-                        $run_pending_order = mysqli_query($con,$update_pending_order);
-                        if($run_pending_order){
-                            echo "<script>alert('Thx for purchasing, orders will be completed soonly')</script>";
-                            echo "<script>window.open('account.php?orders','_self')</script>";   
-                        }
-                    }
-                   ?>
+                   
                </div>
            </div>
        </div>
