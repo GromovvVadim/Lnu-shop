@@ -339,3 +339,16 @@ body{
 #content .info1 {
     color: #5F9EA0;
 } 
+#content #order-summary table{
+    margin-top: 20px;
+    color: #5F9EA0;
+}
+#content #order-summary table td{
+    color: #5F9EA0;
+}
+#content #order-summary table tr.total td,
+#content #order-summary table tr.total th{
+    font-size: 18px;
+    color: #5F9EA0;
+    font-weight: 700;
+}
