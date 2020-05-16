@@ -1,4 +1,8 @@
-
+<?php 
+session_start();
+include("db.php");
+include_once("functions/functions.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +18,15 @@
        <div class="container">
            <div class="col-md-6 offer">
                 <a href="#" class="btn btn-success btn-primary">
-                   
+                   <?php
+                   if(!isset($_SESSION['customer_email'])){
+                       echo "Welcome: Guest";
+                   }else{
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                   }
+                   ?>
                </a>
-               <a href="checkout.php" style="color:white"></a>
+               <a href="checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
            </div>
            <div class="col-md-6">
                
@@ -30,7 +40,13 @@
                    </li>
                    <li>
                      <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                    </li>
                    <li  class="active">
@@ -75,13 +91,19 @@
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          
+                          <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                           ?>
                        </li> 
                    </ul>
                </div>
                <a href="cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span> Items in cart </span> 
+                   <span><?php items(); ?> Items in cart </span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -177,4 +199,33 @@
     <script src="js/jquery-331.min.js"></script>
     <script src="js/bootstrap-337.min.js"></script>    
 </body>
-</html> 
+</html>
+
+
+<?php 
+
+if(isset($_POST['register_user'])){
+    $c_name = $_POST['c_name'];
+    $c_phone = $_POST['c_phone'];
+    $c_email = $_POST['c_email'];
+    $c_address = $_POST['c_address'];
+    $c_city = $_POST['c_city'];
+    $c_country = $_POST['c_country'];
+    $c_password = $_POST['c_password'];
+    $c_ip = getIpFunc();
+    $insert_customer = "insert into customers (customer_name,customer_phone,customer_email,customer_address,customer_city,customer_country,customer_pass,customer_ip) values ('$c_name','$c_phone','$c_email','$c_address','$c_city','$c_country','$c_password','$c_ip')";
+    $run_customer = mysqli_query($con,$insert_customer);
+    $sel_cart = "select * from cart where ip_add='$c_ip'";
+    $run_cart = mysqli_query($con,$sel_cart);
+    $check_cart = mysqli_num_rows($run_cart);
+    if($check_cart>0){
+        $_SESSION['customer_email']=$c_email;
+        echo "<script>alert('Account was created')</script>";
+        echo "<script>window.open('checkout.php','_self')</script>";
+    }else{
+        $_SESSION['customer_email']=$c_email;
+        echo "<script>alert('Account was created')</script>";
+        echo "<script>window.open('index.php','_self')</script>";
+    } 
+}
+?>
