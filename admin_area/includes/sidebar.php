@@ -1,4 +1,12 @@
+<?php 
+    
+    if(!isset($_SESSION['admin_email'])){
+        
+        echo "<script>window.open('../login.php','_self')</script>";
+        
+    }else{
 
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -12,30 +20,30 @@
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i></i> <b class="caret"></b> 
+                <i class="fa fa-user"></i></i> <?php echo $admin_name;  ?><b class="caret"></b> 
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="index.php?user_profile=">
+                    <a href="index.php?user_profile=<?php echo $admin_id; ?>">
                         <i class="fa fa-fw fa-user"></i> Profile 
                     </a> 
                 </li> 
                 <li>
                     <a href="index.php?view_products">
                         <i class="fa fa-fw fa-envelope"></i> Products 
-                        <span class="badge"></span> 
+                        <span class="badge"><?php echo $count_products; ?></span> 
                     </a>
                 </li>
                 <li>
                     <a href="index.php?view_customers">
                         <i class="fa fa-fw fa-users"></i> Customeres 
-                        <span class="badge"></span> 
+                        <span class="badge"><?php echo $count_customers; ?></span> 
                     </a>
                 </li>
                 <li>
                     <a href="index.php?view_cats">
                         <i class="fa fa-fw fa-archive"></i> Product Categories 
-                        <span class="badge"></span> 
+                        <span class="badge"><?php echo $count_p_categories; ?></span> 
                     </a>
                 </li>
                 <li class="divider"></li> 
@@ -67,7 +75,7 @@
                         <a href="index.php?view_users"> View Users </a>
                     </li>
                     <li>
-                        <a href="index.php?user_profile="> Edit User Profile </a>
+                        <a href="index.php?user_profile=<?php echo $admin_id; ?>"> Edit User Profile </a>
                     </li>
                 </ul>
             </li>
@@ -149,4 +157,6 @@
             </li>
         </ul>
     </div>
-</nav> 
+</nav>
+
+<?php } ?>
