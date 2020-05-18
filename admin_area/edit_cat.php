@@ -1,11 +1,23 @@
- 
+<?php
+    if(!isset($_SESSION['admin_email'])){ 
+        echo "<script>window.open('login.php','_self')</script>"; 
+    }else{ 
+?> 
+<?php 
+
+    if(isset($_GET['edit_cat'])){ 
+        $edit_cat_id = $_GET['edit_cat']; 
+        $edit_cat_query = "select * from customer_categories where cat_id='$edit_cat_id'"; 
+        $run_edit = mysqli_query($con,$edit_cat_query); 
+        $row_edit = mysqli_fetch_array($run_edit); 
+        $cat_id = $row_edit['cat_id']; 
+        $cat_title = $row_edit['cat_title']; 
+        $cat_desc = $row_edit['cat_desc']; 
+    } 
+?> 
 <div class="row"> 
     <div class="col-lg-12"> 
-        <!--<ol class="breadcrumb"> 
-            <li> 
-                <i class="fa fa-dashboard"></i> Dashboard / Edit Category 
-            </li>
-        </ol>--> 
+
     </div> 
 </div> 
 <div class="row"> 
@@ -46,5 +58,16 @@
         </div> 
     </div> 
 </div> 
-
+<?php 
+  if(isset($_POST['update'])){ 
+      $cat_title = $_POST['cat_title']; 
+      $cat_desc = $_POST['cat_desc']; 
+      $update_cat = "update customer_categories set cat_title='$cat_title',cat_desc='$cat_desc' where cat_id='$cat_id'"; 
+      $run_cat = mysqli_query($con,$update_cat); 
+      if($run_cat){ 
+          echo "<script>alert('Category was updated')</script>"; 
+          echo "<script>window.open('index.php?view_cats','_self')</script>"; 
+      }   
+  } 
+?> 
 <?php } ?> 

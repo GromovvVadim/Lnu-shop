@@ -1,4 +1,35 @@
+<?php
+    if(!isset($_SESSION['admin_email'])){ 
+        echo "<script>window.open('login.php','_self')</script>"; 
+    }else{ 
+?> 
+<?php 
 
+    if(isset($_GET['edit_product'])){ 
+        $edit_id = $_GET['edit_product']; 
+        $get_p = "select * from products where product_id='$edit_id'"; 
+        $run_edit = mysqli_query($con,$get_p); 
+        $row_edit = mysqli_fetch_array($run_edit); 
+        $p_id = $row_edit['product_id']; 
+        $p_cat = $row_edit['p_cat_id']; 
+        $cat = $row_edit['cat_id'];
+        $p_title = $row_edit['product_title'];
+        $p_image1 = $row_edit['product_img1']; 
+        $p_price = $row_edit['product_price']; 
+        $p_keywords = $row_edit['product_keywords']; 
+        $p_desc = $row_edit['product_desc']; 
+    }
+        
+        $get_p_cat = "select * from product_categories where p_cat_id='$p_cat'"; 
+        $run_p_cat = mysqli_query($con,$get_p_cat); 
+        $row_p_cat = mysqli_fetch_array($run_p_cat); 
+        $p_cat_title = $row_p_cat['p_cat_title']; 
+        $get_cat = "select * from customer_categories where cat_id='$cat'"; 
+        $run_cat = mysqli_query($con,$get_cat); 
+        $row_cat = mysqli_fetch_array($run_cat); 
+        $cat_title = $row_cat['cat_title'];
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +72,17 @@
                       <div class="col-md-6">
                           <select name="product_cat" class="form-control">
                               <option value="<?php echo $p_cat; ?>"> <?php echo $p_cat_title; ?> </option>
-                               
+                              <?php 
+                              $get_p_cats = "select * from product_categories";
+                              $run_p_cats = mysqli_query($con,$get_p_cats); 
+                              while ($row_p_cats=mysqli_fetch_array($run_p_cats)){ 
+                                  $p_cat_id = $row_p_cats['p_cat_id'];
+                                  $p_cat_title = $row_p_cats['p_cat_title']; 
+                                  echo " 
+                                  <option value='$p_cat_id'> $p_cat_title </option> 
+                                  "; 
+                              } 
+                              ?> 
                           </select>
                       </div>
                    </div>
@@ -50,7 +91,17 @@
                       <div class="col-md-6">
                           <select name="product_cat" class="form-control">
                               <option value="<?php echo $cat; ?>"> <?php echo $cat_title; ?> </option> 
-                               
+                              <?php
+                              $get_cat = "select * from customer_categories";
+                              $run_cat = mysqli_query($con,$get_cat); 
+                              while ($row_cat=mysqli_fetch_array($run_cat)){ 
+                                  $cat_id = $row_cat['cat_id'];
+                                  $cat_title = $row_cat['cat_title']; 
+                                  echo " 
+                                  <option value='$cat_id'> $cat_title </option> 
+                                  "; 
+                              } 
+                              ?> 
                           </select>
                       </div>
                    </div>
@@ -100,6 +151,28 @@
 </body>
 </html>
 
+<?php 
 
+if(isset($_POST['submit'])){
+    
+    $product_cat = $_POST['product_cat'];
+    $cat = $_POST['cat'];
+    $product_title = $_POST['product_title'];
+    $product_price = $_POST['product_price'];
+    $product_keywords = $_POST['product_keywords'];
+    $product_desc = $_POST['product_desc'];
+    $product_img1 = $_FILES['product_img1']['name'];
+    $temp_name1 = $_FILES['product_img1']['tmp_name'];
+    
+    move_uploaded_file($temp_name1,"product_images/$product_img1");
+  
+    $update_product = "update products set p_cat_id='$product_cat',cat_id='$cat',date=NOW(),product_title='$product_title',product_img1='$product_img1',product_price='$product_price',product_keywords='$product_keywords',product_desc='$product_desc' where product_id='$p_id'";
+    $run_product = mysqli_query($con,$update_product);
+    if($run_product){
+       echo "<script>alert('Product was updated')</script>";
+       echo "<script>window.open('index.php?view_products','_self')</script>";  
+    }
+}
+?>
 
 <?php } ?>
