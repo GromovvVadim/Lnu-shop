@@ -1,4 +1,8 @@
-
+<?php
+    if(!isset($_SESSION['admin_email'])){ 
+        echo "<script>window.open('login.php','_self')</script>"; 
+    }else{ 
+?> 
 <div class="row"> 
     <div class="col-lg-12">  
     </div> 
@@ -12,7 +16,14 @@
                 </h3> 
             </div> 
             <div class="panel-body"> 
-                 
+                <?php 
+                    $get_slides = "select * from slider"; 
+                    $run_slides = mysqli_query($con,$get_slides); 
+                    while($row_slides=mysqli_fetch_array($run_slides)){ 
+                        $slide_id = $row_slides['slide_id']; 
+                        $slide_name = $row_slides['slide_name']; 
+                        $slide_image = $row_slides['slide_image']; 
+                ?> 
                 <div class="col-lg-3 col-md-3"> 
                     <div class="panel panel-primary"> 
                         <div class="panel-heading"> 
