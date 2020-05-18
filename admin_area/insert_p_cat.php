@@ -1,11 +1,10 @@
-
+<?php
+    if(!isset($_SESSION['admin_email'])){ 
+        echo "<script>window.open('login.php','_self')</script>"; 
+    }else{ 
+?> 
 <div class="row"> 
     <div class="col-lg-12"> 
-        <!--<ol class="breadcrumb"> 
-            <li> 
-                <i class="fa fa-dashboard"></i> Dashboard / Insert Product Category 
-            </li>
-        </ol>--> 
     </div> 
 </div>
 <div class="row"> 
@@ -48,5 +47,16 @@
     </div> 
 </div> 
 
- 
+<?php 
+      if(isset($_POST['submit'])){
+          $p_cat_title = $_POST['p_cat_title'];
+          $p_cat_desc = $_POST['p_cat_desc'];
+          $insert_p_cat = "insert into product_categories (p_cat_title,p_cat_desc) values ('$p_cat_title','$p_cat_desc')";
+          $run_p_cat = mysqli_query($con,$insert_p_cat);
+          if($run_p_cat){
+              echo "<script>alert(' New product category was added')</script>";
+              echo "<script>window.open('index.php?view_p_cats','_self')</script>";
+          }
+      }
+?> 
 <?php } ?> 
