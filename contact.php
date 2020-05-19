@@ -1,4 +1,8 @@
-
+<?php 
+session_start();
+include("db.php");
+include_once("functions/functions.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +18,15 @@
        <div class="container">
            <div class="col-md-6 offer">
             <a href="#" class="btn btn-success btn-primary">
-                   
+                   <?php
+                   if(!isset($_SESSION['customer_email'])){
+                       echo "Welcome: Guest";
+                   }else{
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                   }
+                   ?>
                </a>
-               <a href="checkout.php" style="color:white"></a>
+               <a href="checkout.php" style="color:white"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
            </div>
            <div class="col-md-6">
                
@@ -30,7 +40,13 @@
                    </li>
                    <li>
                     <a href="checkout.php">
-                     
+                     <?php
+                     if(!isset($_SESSION['customer_email'])){
+                          echo "<a href='checkout.php'> Login </a>";
+                         }else{
+                          echo " <a href='logout.php'> Log Out </a> ";
+                         }
+                     ?>
                      </a>
                    </li>
                    <li>
@@ -75,13 +91,19 @@
                            <a href="contact.php">Contacts</a>
                        </li>
                         <li>
-                          
+                          <?php
+                           if(!isset($_SESSION['customer_email'])){
+                               echo"<a href='checkout.php'>My Account</a>";
+                           }else{
+                              echo"<a href='customer/account.php?orders'>My Account</a>";
+                           }
+                           ?>
                        </li> 
                    </ul>
                </div>
                <a href="cart.php" class="btn navbar-btn btn-primary right">
                    <i class="fa fa-shopping-cart"></i> 
-                   <span> Items in cart </span> 
+                   <span><?php items(); ?> Items in cart </span> 
                </a> 
                <div class="navbar-collapse collapse right">
                    <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
@@ -158,7 +180,23 @@
                                </button> 
                            </div> 
                        </form>
-                       
+                       <?php
+                       if(isset($_POST['submit'])){
+                           $sender_name = $_POST['name'];
+                           $sender_email = $_POST['email'];
+                           $sender_subject = $_POST['subject'];
+                           $sender_message = $_POST['message'];
+                           $receiver_email = "monopolysobaka1@gmail.com";
+                           mail($receiver_email,$sender_name,$sender_subject,$sender_message,$sender_email);
+                           
+                           $email = $_POST['email'];
+                           $subject = "Thx for sending  message";
+                           $msg = "We will reply u shortly.";
+                           $from = "monopolysobaka1@gmail.com";
+                           mail($email,$subject,$msg,$from);
+                           echo "<h2 align='center'> Your message has sent sucessfully </h2>";
+                       }
+                       ?>
                    </div>
                </div>
            </div>
@@ -169,6 +207,44 @@
     ?> 
     <script src="js/jquery-331.min.js"></script>
     <script src="js/bootstrap-337.min.js"></script>
-       
+    <script>
+    
+        $(document).ready(function(){
+            $('.nav-toggle').click(function(){
+                $('.panel-collapse,.collapse-data').slideToggle(700,function(){
+                    if($(this).css('display')=='none'){
+                        $(".hide-show").html('Show');
+                    }else{
+                        $(".hide-show").html('Hide');
+                    }
+                });
+            });
+            $(function(){
+                $.fn.extend({
+                    filterTable: function(){
+                        return this.each(function(){
+                            $(this).on('keyup', function(){
+                                var $this = $(this),
+                                search = $this.val().toLowerCase(),
+                                target = $this.attr('data-filters'),
+                                handle = $(target),
+                                rows = handle.find('li a');
+                                if(search == ''){
+                                    rows.show();
+                                }else{
+                                    rows.each(function(){
+                                        var $this = $(this);
+                                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+                $('[data-action="filter"][id="dev-table-filter"]').filterTable();
+            });
+        });
+    
+    </script>   
 </body>
 </html>
