@@ -13,7 +13,7 @@ Website structure:
   
   6)Admin panel
 
-Used tools: PHP, MuSQL,  HTML,  CSS, Bootstrap4.
+Used tools: PHP, MySQL,  HTML,  CSS, Bootstrap4.
 
 #Instruction
 
