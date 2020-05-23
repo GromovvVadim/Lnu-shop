@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Час створення: Трв 23 2020 р., 09:20
--- Версія сервера: 10.4.10-MariaDB
--- Версія PHP: 7.3.12
+-- Время создания: Май 23 2020 г., 20:21
+-- Версия сервера: 10.4.11-MariaDB
+-- Версия PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База даних: `lnu-shop`
+-- База данных: `lnu-shop`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `admins`
+-- Структура таблицы `admins`
 --
 
 CREATE TABLE `admins` (
@@ -40,17 +39,17 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `admins`
+-- Дамп данных таблицы `admins`
 --
 
 INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_phone`, `admin_email`, `admin_country`, `admin_pass`, `admin_job`, `admin_about`) VALUES
-(1, 'TD', '+298 485 254', 'TD@gmail.com', 'Faroe Islands', 'TD', 'Webshop creator', 'Was working hard to create this site)'),
-(2, 'TD1', '+380000000', 'TD1@gmail.com', 'country1', 'TD1', 'webdev', ' Was working hard to create this site)');
+(3, 'Vadim', '123456', 'vadim@gmail.com', 'Ukraine', '12345', 'Admin', ''),
+(4, 'Danylo', '1234567', 'danylo@gmail.com', 'Ukraine', '12345', 'Admin', 'Admin');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `cart`
+-- Структура таблицы `cart`
 --
 
 CREATE TABLE `cart` (
@@ -62,7 +61,7 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `customers`
+-- Структура таблицы `customers`
 --
 
 CREATE TABLE `customers` (
@@ -78,16 +77,17 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `customers`
+-- Дамп данных таблицы `customers`
 --
 
 INSERT INTO `customers` (`customer_id`, `customer_name`, `customer_phone`, `customer_email`, `customer_address`, `customer_city`, `customer_country`, `customer_pass`, `customer_ip`) VALUES
-(1, 'user1', '+3809756452', 'user1@gmail.com', 'address', 'city', 'country', 'user', '::1');
+(1, 'user1', '+3809756452', 'user1@gmail.com', 'address', 'city', 'country', 'user', '::1'),
+(3, 'Vadim', '123456', 'vadim@gmail.com', 'Snopkivska', 'Lviv', 'Ukraine', '12345', '::1');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `customer_categories`
+-- Структура таблицы `customer_categories`
 --
 
 CREATE TABLE `customer_categories` (
@@ -97,7 +97,7 @@ CREATE TABLE `customer_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `customer_categories`
+-- Дамп данных таблицы `customer_categories`
 --
 
 INSERT INTO `customer_categories` (`cat_id`, `cat_title`, `cat_desc`) VALUES
@@ -107,7 +107,7 @@ INSERT INTO `customer_categories` (`cat_id`, `cat_title`, `cat_desc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `customer_orders`
+-- Структура таблицы `customer_orders`
 --
 
 CREATE TABLE `customer_orders` (
@@ -121,19 +121,20 @@ CREATE TABLE `customer_orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `customer_orders`
+-- Дамп данных таблицы `customer_orders`
 --
 
 INSERT INTO `customer_orders` (`order_id`, `customer_id`, `qty`, `order_date`, `price`, `order_status`, `invoice_no`) VALUES
 (1, 1, 1, '2019-12-15', 300, 'Complete', 1086946780),
 (2, 1, 1, '2019-12-15', 500, 'Complete', 1086946780),
 (3, 1, 2, '2019-12-15', 500, 'pending', 1086946780),
-(4, 1, 2, '2019-12-20', 580, 'pending', 1131646828);
+(4, 1, 2, '2019-12-20', 580, 'pending', 1131646828),
+(5, 3, 1, '2020-05-23', 390, 'Complete', 1983217793);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `payments`
+-- Структура таблицы `payments`
 --
 
 CREATE TABLE `payments` (
@@ -147,16 +148,17 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `payments`
+-- Дамп данных таблицы `payments`
 --
 
 INSERT INTO `payments` (`payment_id`, `invoice_no`, `amount`, `payment_option`, `ref_id`, `code`, `payment_date`) VALUES
-(2, 1086946780, 500, 'Credit Card', 1124, 651511, '15/12/2019');
+(2, 1086946780, 500, 'Credit Card', 1124, 651511, '15/12/2019'),
+(3, 1983217793, 1, 'Western Union', 312312, 2147483647, '2020-05-23');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `pending_orders`
+-- Структура таблицы `pending_orders`
 --
 
 CREATE TABLE `pending_orders` (
@@ -169,19 +171,20 @@ CREATE TABLE `pending_orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `pending_orders`
+-- Дамп данных таблицы `pending_orders`
 --
 
 INSERT INTO `pending_orders` (`order_id`, `customer_id`, `invoice_no`, `product_id`, `qty`, `order_status`) VALUES
 (1, 1, 1086946780, '3', 1, 'Complete'),
 (2, 1, 2147483647, '6', 1, 'Complete'),
 (3, 1, 1086946780, '5', 2, 'pending'),
-(4, 1, 1131646828, '4', 2, 'pending');
+(4, 1, 1131646828, '4', 2, 'pending'),
+(5, 3, 1983217793, '9', 1, 'Complete');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `products`
+-- Структура таблицы `products`
 --
 
 CREATE TABLE `products` (
@@ -197,7 +200,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `products`
+-- Дамп данных таблицы `products`
 --
 
 INSERT INTO `products` (`product_id`, `p_cat_id`, `cat_id`, `date`, `product_title`, `product_img1`, `product_price`, `product_keywords`, `product_desc`) VALUES
@@ -214,7 +217,7 @@ INSERT INTO `products` (`product_id`, `p_cat_id`, `cat_id`, `date`, `product_tit
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `product_categories`
+-- Структура таблицы `product_categories`
 --
 
 CREATE TABLE `product_categories` (
@@ -224,7 +227,7 @@ CREATE TABLE `product_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `product_categories`
+-- Дамп данных таблицы `product_categories`
 --
 
 INSERT INTO `product_categories` (`p_cat_id`, `p_cat_title`, `p_cat_desc`) VALUES
@@ -236,7 +239,7 @@ INSERT INTO `product_categories` (`p_cat_id`, `p_cat_title`, `p_cat_desc`) VALUE
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `slider`
+-- Структура таблицы `slider`
 --
 
 CREATE TABLE `slider` (
@@ -246,127 +249,126 @@ CREATE TABLE `slider` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп даних таблиці `slider`
+-- Дамп данных таблицы `slider`
 --
 
 INSERT INTO `slider` (`slide_id`, `slide_name`, `slide_image`) VALUES
-(1, 'slide 1', 'slide-1.jpg'),
-(2, 'slide 2', 'slide-2.jpg'),
-(3, 'slide 3', 'slide-1.jpg'),
-(4, 'slide 4', 'slide-2.jpg');
+(1, 'slide 1', 'lnu.jpg'),
+(2, 'slide 2', 'students.jpg'),
+(3, 'slide 3', 'students2.jpg');
 
 --
--- Індекси збережених таблиць
+-- Индексы сохранённых таблиц
 --
 
 --
--- Індекси таблиці `admins`
+-- Индексы таблицы `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`);
 
 --
--- Індекси таблиці `customers`
+-- Индексы таблицы `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Індекси таблиці `customer_categories`
+-- Индексы таблицы `customer_categories`
 --
 ALTER TABLE `customer_categories`
   ADD PRIMARY KEY (`cat_id`);
 
 --
--- Індекси таблиці `customer_orders`
+-- Индексы таблицы `customer_orders`
 --
 ALTER TABLE `customer_orders`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Індекси таблиці `payments`
+-- Индексы таблицы `payments`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`payment_id`);
 
 --
--- Індекси таблиці `pending_orders`
+-- Индексы таблицы `pending_orders`
 --
 ALTER TABLE `pending_orders`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Індекси таблиці `products`
+-- Индексы таблицы `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
 
 --
--- Індекси таблиці `product_categories`
+-- Индексы таблицы `product_categories`
 --
 ALTER TABLE `product_categories`
   ADD PRIMARY KEY (`p_cat_id`);
 
 --
--- Індекси таблиці `slider`
+-- Индексы таблицы `slider`
 --
 ALTER TABLE `slider`
   ADD PRIMARY KEY (`slide_id`);
 
 --
--- AUTO_INCREMENT для збережених таблиць
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблиці `admins`
+-- AUTO_INCREMENT для таблицы `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблиці `customers`
+-- AUTO_INCREMENT для таблицы `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблиці `customer_categories`
+-- AUTO_INCREMENT для таблицы `customer_categories`
 --
 ALTER TABLE `customer_categories`
   MODIFY `cat_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблиці `customer_orders`
+-- AUTO_INCREMENT для таблицы `customer_orders`
 --
 ALTER TABLE `customer_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблиці `payments`
+-- AUTO_INCREMENT для таблицы `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `payment_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблиці `pending_orders`
+-- AUTO_INCREMENT для таблицы `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблиці `products`
+-- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблиці `product_categories`
+-- AUTO_INCREMENT для таблицы `product_categories`
 --
 ALTER TABLE `product_categories`
   MODIFY `p_cat_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблиці `slider`
+-- AUTO_INCREMENT для таблицы `slider`
 --
 ALTER TABLE `slider`
   MODIFY `slide_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;

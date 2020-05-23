@@ -35,9 +35,15 @@ include_once("functions/functions.php");
                    <li>
                        <a href="cart.php">Check Cart</a>
                    </li>
-                   <li>
-                       <a href="checkout.php">Account</a>
-                   </li>
+                    <li>
+                        <?php
+                         if(!isset($_SESSION['customer_email'])){
+                             echo"<a href='checkout.php'>Account</a>";
+                         }else{
+                            echo"<a href='customer/account.php?orders'>Account</a>";
+                         }
+                         ?>
+                  </li> 
                    <li>
                      <a href="checkout.php">
                      <?php
@@ -134,7 +140,7 @@ include_once("functions/functions.php");
                    <li class="active" data-target="#myCarousel" data-slide-to="0"></li>
                    <li data-target="#myCarousel" data-slide-to="1"></li>
                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                   <li data-target="#myCarousel" data-slide-to="3"></li> 
+                   
                </ol>
                <div class="carousel-inner">
                    <?php
