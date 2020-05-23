@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Час створення: Трв 20 2020 р., 23:20
+-- Час створення: Трв 23 2020 р., 09:20
 -- Версія сервера: 10.4.10-MariaDB
 -- Версія PHP: 7.3.12
 
@@ -58,13 +58,6 @@ CREATE TABLE `cart` (
   `ip_add` varchar(255) NOT NULL,
   `qty` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп даних таблиці `cart`
---
-
-INSERT INTO `cart` (`p_id`, `ip_add`, `qty`) VALUES
-(9, '::1', 1);
 
 -- --------------------------------------------------------
 
@@ -208,15 +201,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `p_cat_id`, `cat_id`, `date`, `product_title`, `product_img1`, `product_price`, `product_keywords`, `product_desc`) VALUES
-(1, 1, 1, '2019-12-14 19:09:17', 'Barbarian Sword', 'product-1.jpg', 280, 'Sword', '<p>Nice sword for collecting. But it can easily be used for duels)</p>'),
-(2, 1, 1, '2019-12-14 19:09:25', 'Goblin Sword', 'product-2.jpg', 250, 'Sword', '<p>Nice masterwork piece.</p>'),
-(3, 1, 1, '2019-12-14 19:09:33', 'Viking Sword', 'viking-crop-1.jpg', 300, 'Sword', '<p>One of the best replicas)</p>'),
-(4, 1, 2, '2019-12-14 19:09:44', 'Longclaw Sword', 'longclaw-sword.jpg', 290, 'Sword', '<p>Film copy.</p>'),
-(5, 4, 1, '2019-12-14 19:09:55', 'Medieval Shield', 'Medieval-shield.jpg', 250, 'Shield', '<p>Nice adding for sword)</p>'),
-(6, 3, 1, '2019-12-14 19:10:06', 'Medieval Armor', 'Medieval-armor.jpg', 500, 'Armor', '<p>Classic medieval armor replica.</p>'),
-(7, 3, 2, '2019-12-17 12:17:42', 'Medieval Women Armor', 'Medieval-girl-armor.jpg', 490, 'Armor', '<p>Egyptian medieval female armor.</p>'),
-(8, 1, 2, '2019-12-19 10:56:14', 'Shortsword', 'shortsword.jpg', 200, 'Sword', '<p>Nice as additional weapon</p>'),
-(9, 1, 2, '2019-12-19 10:59:17', 'Decoration Sword', 'toy-sword.jpg', 100, 'Sword', '<p>Decoration item.</p>');
+(1, 1, 1, '2020-05-23 07:00:04', 'Polo black', 'Polo.jpg', 350, 'Polo', '                            <p>Cool and comfortable)</p>                          '),
+(2, 1, 1, '2020-05-23 07:04:24', 'White Polo', 'Polo1.jpg', 350, 'Polo', '                            <p>Very comfortable.</p>                          '),
+(3, 2, 1, '2020-05-23 07:16:20', 'Men Shirt1', 'Shirt.jpg', 300, 'Shirt', '                            <p>On style)</p>                          '),
+(4, 2, 2, '2020-05-23 07:16:31', 'Women Shirt1', 'Shirt1.jpg', 310, 'Shirt', '                            <p>So cool.</p>                          '),
+(5, 4, 1, '2020-05-23 06:47:41', 'Socks', 'Socks.jpg', 80, 'Socks', '                            <p>Nice and warm)</p>                          '),
+(6, 3, 1, '2020-05-23 06:47:19', 'Hoodie', 'Hoodie.jpg', 700, 'Hoodie', '                            <p>Nice and in style.</p>                          '),
+(7, 3, 2, '2020-05-23 06:47:31', 'Women Hoodie', 'Hoodie1.jpg', 550, 'Hoodie', '                            <p>Nice hoodie for every day.</p>                          '),
+(8, 2, 1, '2020-05-23 07:17:05', 'Men Shirt2', 'Shirt3.jpg', 450, 'Shirt', '                            <p>Nice for special day</p>                          '),
+(9, 2, 2, '2020-05-23 07:17:16', 'Women Shirt2', 'Shirt2.jpg', 390, 'Shirt', '                            <p>Top seller.</p>                          ');
 
 -- --------------------------------------------------------
 
@@ -235,10 +228,10 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`p_cat_id`, `p_cat_title`, `p_cat_desc`) VALUES
-(1, 'Swords', 'A weapon with a long blade for cutting or thrusting that is often used as a symbol of honor or authority.'),
-(2, 'Daggers', 'A sharp pointed knife for stabbing.'),
-(3, 'Armor', 'Defensive covering for the body.'),
-(4, 'Shields', 'A broad piece of defensive armor carried on the arm.');
+(1, 'Polo shirt', 'A polo shirt is a form of shirt with a collar, a placket neckline with three buttons, and an optional pocket. Polo shirts are usually short sleeved.'),
+(2, 'Shirt', 'A shirt is a cloth garment for the upper body (from the neck to the waist).'),
+(3, 'Hoodie', 'A hoodie is a sweatshirt with a hood. Hoodies often include a muff sewn onto the lower front, and (usually) a drawstring to adjust the hood opening.'),
+(4, 'Socks', 'A sock is a piece of clothing worn on the feet and often covering the ankle or some part of the calf.');
 
 -- --------------------------------------------------------
 
